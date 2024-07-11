@@ -87,7 +87,7 @@
         <label for="peopleCount">How many people are you cooking for?</label>
         <input type="number" id="peopleCount" name="peopleCount" required>
 
-        <label for="dietaryRestrictions">Are there any specific dietary restrictions or preferences?</label>
+        <label for="dietaryRestrictions">Are there any specific dietary restrictions or preferences (e.g., vegetarian, gluten-free, allergies)?</label>
         <textarea id="dietaryRestrictions" name="dietaryRestrictions"></textarea>
 
         <label for="cookingSkills">How would you rate your cooking skills?</label>
@@ -113,7 +113,7 @@
         <label for="dislikedFoods">Are there any foods or ingredients you dislike or want to avoid?</label>
         <textarea id="dislikedFoods" name="dislikedFoods"></textarea>
 
-        <label for="healthGoals">Are you aiming for any specific health goals?</label>
+        <label for="healthGoals">Are you aiming for any specific health goals (e.g., weight loss, muscle gain, general health)?</label>
         <textarea id="healthGoals" name="healthGoals"></textarea>
 
         <label for="portionPreference">Do you prefer larger or smaller portions for your meals?</label>
@@ -124,7 +124,7 @@
             <option value="Larger portions">Larger portions</option>
         </select>
 
-        <label for="groceryBudget">What is your weekly or monthly budget for groceries?</label>
+        <label for="groceryBudget">What is your weekly budget for groceries?</label>
         <input type="text" id="groceryBudget" name="groceryBudget" required>
 
         <label for="mealPrep">Do you prefer to cook meals each day or prep them ahead of time?</label>
@@ -136,7 +136,7 @@
             <option value="Prep ahead with a few meals cooked daily">Prep ahead with a few meals cooked daily</option>
         </select>
 
-        <label>Name the kitchen equipment you have at home:</label>
+        <label>Name the kitchen equipment you have at home (e.g., blender, slow cooker, air fryer, oven, rice cooker, etc):</label>
         <div class="checkbox-group">
             <label><input type="checkbox" name="kitchenEquipment" value="Oven"> Oven</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Stove/Range"> Stove/Range (gas or electric)</label>
@@ -207,14 +207,17 @@
             }
 
             // Send data to Google Sheet
+            const payload = new URLSearchParams();
+            payload.append('payload', JSON.stringify(data));
+
             fetch('https://script.google.com/a/macros/upstory.co/s/AKfycby1GfcITPN17aR6iNEdmgZU6Gg0Ps-MsrrLq91VRFkST6giIj3KaKiDLTHyWr0BcY2i/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 cache: 'no-cache',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(data)
+                body: payload
             }).then(() => {
                 alert('Form submitted successfully!');
                 form.reset();
