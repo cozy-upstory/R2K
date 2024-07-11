@@ -233,35 +233,38 @@
         form.addEventListener('submit', e => {
             e.preventDefault();
             const formData = new FormData(form);
-            const data = {};
+            const data = {
+                fullName: formData.get('fullName'),
+                email: formData.get('email'),
+                results: []
+            };
+            
             formData.forEach((value, key) => {
-                if (key === 'kitchenEquipment') {
-                    if (!data[key]) {
-                        data[key] = [];
+                if (key !== 'fullName' && key !== 'email') {
+                    if (key === 'kitchenEquipment') {
+                        const checkedEquipment = Array.from(form.querySelectorAll('input[name="kitchenEquipment"]:checked'))
+                            .map(input => input.value);
+                        data.results.push(`Name the kitchen equipment you have at home: ${checkedEquipment.join(', ')}`);
+                    } else {
+                        const label = form.querySelector(`label[for="${key}"]`);
+                        const question = label ? label.textContent : key;
+                        data.results.push(`${question} ${value}`);
                     }
-                    data[key].push(value);
-                } else {
-                    data[key] = value;
                 }
             });
-            
-            // Convert kitchen equipment array to string
-            if (data['kitchenEquipment']) {
-                data['kitchenEquipment'] = data['kitchenEquipment'].join(', ');
-            }
 
-            // Prepare data for single cell submission
-            let singleCellData = Object.entries(data).map(([key, value]) => `${key}: ${value}`).join('; ');
+            // Join results with semicolons
+            data.results = data.results.join('; ');
 
             // Send data to Google Sheet
-            fetch('https://script.google.com/macros/s/AKfycbz_b8OCmFaIaYZcTsD_D6sWpnuMLf_eHKWoIQukWYVM3ggA3iwNoJ-mxgdKoJMbKlHg/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbyza1IyXT3u0bwhTz6_1oRumyAtIdxMBwbXCbE45iPRH03n7V76FrmeyIMOWsVKqbk-/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 cache: 'no-cache',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ data: singleCellData })
+                body: JSON.stringify(data)
             }).then(() => {
                 alert('Form submitted successfully!');
                 form.reset();
