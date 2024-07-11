@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        form {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: calc(30% * 100vw);
+            max-height: 300px;
+            resize: vertical;
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Grocery Survey Form</h1>
+    <form id="surveyForm">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="fullName">What's your full name?</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="zipCode">What's the zip code you typically buy groceries in?</label>
+        <input type="text" id="zipCode" name="zipCode" required>
+
+        <label for="peopleCount">How many people are you cooking for?</label>
+        <input type="number" id="peopleCount" name="peopleCount" required>
+
+        <label for="dietaryRestrictions">Are there any specific dietary restrictions or preferences (e.g., vegetarian, gluten-free, allergies)?</label>
+        <textarea id="dietaryRestrictions" name="dietaryRestrictions"></textarea>
+
+        <label for="cookingSkills">How would you rate your cooking skills?</label>
+        <select id="cookingSkills" name="cookingSkills" required>
+            <option value="">Select an option</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select>
+
+        <label for="breakfastFrequency">How often do you typically eat breakfast each week?</label>
+        <input type="number" id="breakfastFrequency" name="breakfastFrequency" min="0" max="7" required>
+
+        <label for="lunchFrequency">How often do you typically eat lunch each week?</label>
+        <input type="number" id="lunchFrequency" name="lunchFrequency" min="0" max="7" required>
+
+        <label for="dinnerFrequency">How often do you typically eat dinner each week?</label>
+        <input type="number" id="dinnerFrequency" name="dinnerFrequency" min="0" max="7" required>
+
+        <label for="favoriteFoods">What are some of your favorite foods or ingredients you enjoy eating?</label>
+        <textarea id="favoriteFoods" name="favoriteFoods"></textarea>
+
+        <label for="dislikedFoods">Are there any foods or ingredients you dislike or want to avoid?</label>
+        <textarea id="dislikedFoods" name="dislikedFoods"></textarea>
+
+        <label for="healthGoals">Are you aiming for any specific health goals (e.g., weight loss, muscle gain, general health)?</label>
+        <textarea id="healthGoals" name="healthGoals"></textarea>
+
+        <label for="portionPreference">Do you prefer larger or smaller portions for your meals?</label>
+        <select id="portionPreference" name="portionPreference" required>
+            <option value="">Select an option</option>
+            <option value="Smaller portions">Smaller portions</option>
+            <option value="Normal serving size">Normal serving size</option>
+            <option value="Larger portions">Larger portions</option>
+        </select>
+
+        <label for="groceryBudget">What is your weekly budget for groceries?</label>
+        <input type="text" id="groceryBudget" name="groceryBudget" required>
+
+        <label for="mealPrep">Do you prefer to cook meals each day or prep them ahead of time?</label>
+        <select id="mealPrep" name="mealPrep" required>
+            <option value="">Select an option</option>
+            <option value="Cook daily">Cook daily</option>
+            <option value="Prep ahead">Prep ahead</option>
+            <option value="Cook daily with a few meals prepped ahead">Cook daily with a few meals prepped ahead</option>
+            <option value="Prep ahead with a few meals cooked daily">Prep ahead with a few meals cooked daily</option>
+        </select>
+
+        <label>Name the kitchen equipment you have at home (e.g., blender, slow cooker, air fryer, oven, rice cooker, etc):</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="kitchenEquipment" value="Oven"> Oven</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Stove/Range"> Stove/Range (gas or electric)</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Microwave"> Microwave</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Toaster"> Toaster</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Blender"> Blender</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Rice Cooker"> Rice Cooker</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Slow Cooker/Crockpot"> Slow Cooker/Crockpot</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Air Fryer"> Air Fryer</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Food Processor"> Food Processor</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Electric Kettle"> Electric Kettle</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Stand Mixer"> Stand Mixer</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Hand Mixer"> Hand Mixer</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Toaster Oven"> Toaster Oven</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Pressure Cooker/Instant Pot"> Pressure Cooker/Instant Pot</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Waffle Maker"> Waffle Maker</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Electric Griddle"> Electric Griddle</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Sous Vide Machine"> Sous Vide Machine</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Bread Maker"> Bread Maker</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Juicer"> Juicer</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Indoor Grill/Panini Press"> Indoor Grill/Panini Press</label>
+        </div>
+
+        <label for="mealVariety">Are you okay with eating the same meal multiple times in a week, or do you prefer a variety?</label>
+        <select id="mealVariety" name="mealVariety" required>
+            <option value="">Select an option</option>
+            <option value="Same meals">Same meals</option>
+            <option value="Same meals with a little bit of variety">Same meals with a little bit of variety</option>
+            <option value="Variety">Variety</option>
+        </select>
+
+        <label for="mealStorage">Do you prefer meals that can be easily stored and reheated, or do you prefer fresh meals?</label>
+        <select id="mealStorage" name="mealStorage" required>
+            <option value="">Select an option</option>
+            <option value="Stored and reheated">Stored and reheated</option>
+            <option value="Fresh">Fresh</option>
+            <option value="A mix of both">A mix of both</option>
+        </select>
+
+        <p>
+            <input type="checkbox" id="consent" name="consent" required>
+            <label for="consent">I consent to the collection and processing of my survey responses as described in the privacy policy.</label>
+        </p>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        const form = document.getElementById('surveyForm');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                if (key === 'kitchenEquipment') {
+                    if (!data[key]) {
+                        data[key] = [];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            });
+            
+            // Convert kitchen equipment array to string
+            if (data['kitchenEquipment']) {
+                data['kitchenEquipment'] = data['kitchenEquipment'].join(', ');
+            }
+
+            // Send data to Google Sheet
+            const payload = new URLSearchParams();
+            payload.append('payload', JSON.stringify(data));
+
+            fetch('https://script.google.com/a/macros/upstory.co/s/AKfycby1GfcITPN17aR6iNEdmgZU6Gg0Ps-MsrrLq91VRFkST6giIj3KaKiDLTHyWr0BcY2i/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: payload
+            }).then(() => {
+                alert('Form submitted successfully!');
+                form.reset();
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting the form. Please try again.');
+            });
+
+            // Generate and download CSV
+            let csvContent = "data:text/csv;charset=utf-8,";
+            let row = [];
+            for (let key in data) {
+                let value = data[key];
+                row.push(`${key}: ${value}`);
+            }
+            csvContent += `"${row.join('; ')}"`;
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "survey_responses.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
