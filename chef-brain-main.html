@@ -62,6 +62,18 @@
         .checkbox-group input[type="checkbox"] {
             margin-right: 5px;
         }
+        #fillRandomData {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        #fillRandomData:hover {
+            background-color: #45a049;
+        }
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -74,6 +86,7 @@
 </head>
 <body>
     <h1>Grocery Survey Form</h1>
+    <button id="fillRandomData">Fill Random Data</button>
     <form id="surveyForm">
         <label for="email">Email Address:</label>
         <input type="email" id="email" name="email" required>
@@ -185,6 +198,36 @@
     </form>
 
     <script>
+        function fillRandomData() {
+            document.getElementById('email').value = "johndoe@example.com";
+            document.getElementById('fullName').value = "John Doe";
+            document.getElementById('zipCode').value = "12345";
+            document.getElementById('peopleCount').value = "3";
+            document.getElementById('dietaryRestrictions').value = "Gluten-free, lactose intolerant";
+            document.getElementById('cookingSkills').value = "Intermediate";
+            document.getElementById('breakfastFrequency').value = "5";
+            document.getElementById('lunchFrequency').value = "7";
+            document.getElementById('dinnerFrequency').value = "6";
+            document.getElementById('favoriteFoods').value = "Grilled chicken, roasted vegetables, quinoa, salmon, avocado toast";
+            document.getElementById('dislikedFoods').value = "Oysters, liver, blue cheese";
+            document.getElementById('healthGoals').value = "Maintain a balanced diet and improve overall energy levels";
+            document.getElementById('portionPreference').value = "Normal serving size";
+            document.getElementById('groceryBudget').value = "$150";
+            document.getElementById('mealPrep').value = "Cook daily with a few meals prepped ahead";
+            
+            const kitchenEquipment = document.getElementsByName('kitchenEquipment');
+            const selectedEquipment = ["Oven", "Stove/Range", "Microwave", "Blender", "Slow Cooker/Crockpot", "Air Fryer"];
+            kitchenEquipment.forEach(item => {
+                item.checked = selectedEquipment.includes(item.value);
+            });
+
+            document.getElementById('mealVariety').value = "Same meals with a little bit of variety";
+            document.getElementById('mealStorage').value = "A mix of both";
+            document.getElementById('consent').checked = true;
+        }
+
+        document.getElementById('fillRandomData').addEventListener('click', fillRandomData);
+
         const form = document.getElementById('surveyForm');
         form.addEventListener('submit', e => {
             e.preventDefault();
