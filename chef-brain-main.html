@@ -176,32 +176,41 @@
                     const calorieGoalsInputs = document.getElementById('calorieGoalsInputs');
                     calorieGoalsInputs.style.display = this.value === 'Yes' ? 'block' : 'none';
                     if (this.value === 'Yes') {
-                        const peopleCount = parseInt(document.getElementById('peopleCount').value);
-                        calorieGoalsInputs.innerHTML = '';
-                        for (let i = 1; i <= peopleCount; i++) {
-                            calorieGoalsInputs.innerHTML += `
-                                <label for="person${i}Calories">Person ${i}:</label>
-                                <select id="person${i}Calories" name="person${i}Calories">
-                                    <option value="">Select calorie range</option>
-                                    <option value="1200-1500">1200-1500</option>
-                                    <option value="1501-1800">1501-1800</option>
-                                    <option value="1801-2100">1801-2100</option>
-                                    <option value="2101-2400">2101-2400</option>
-                                    <option value="2401+">2401+</option>
-                                </select>
-                            `;
-                        }
+                        updateCalorieGoalInputs();
                     }
                 });
             });
 
+            // Function to update calorie goal inputs
+            function updateCalorieGoalInputs() {
+                const peopleCount = parseInt(document.getElementById('peopleCount').value);
+                const calorieGoalsInputs = document.getElementById('calorieGoalsInputs');
+                calorieGoalsInputs.innerHTML = '';
+                for (let i = 1; i <= peopleCount; i++) {
+                    calorieGoalsInputs.innerHTML += `
+                        <div>
+                            <label for="person${i}Calories">Person ${i}:</label>
+                            <select id="person${i}Calories" name="person${i}Calories">
+                                <option value="">Select calorie range</option>
+                                <option value="1200-1500">1200-1500</option>
+                                <option value="1501-1800">1501-1800</option>
+                                <option value="1801-2100">1801-2100</option>
+                                <option value="2101-2400">2101-2400</option>
+                                <option value="2401+">2401+</option>
+                            </select>
+                        </div>
+                    `;
+                }
+            }
+
             // Update calorie goal inputs when people count changes
             document.getElementById('peopleCount').addEventListener('change', function() {
                 if (document.querySelector('input[name="calorieGoals"]:checked')?.value === 'Yes') {
-                    document.querySelector('input[name="calorieGoals"]:checked').dispatchEvent(new Event('change'));
+                    updateCalorieGoalInputs();
                 }
             });
         </script>
+
         <label>9. Are you or anyone you're cooking for aiming for any specific health goals? (Select all that apply)</label>
         <div class="checkbox-group">
             <label><input type="checkbox" name="healthGoals" value="Weight loss"> Weight loss</label>
