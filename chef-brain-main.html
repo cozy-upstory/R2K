@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grocery Survey Form</title>
+    <title>Meal Planner Questionnaire</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,8 +35,7 @@
             box-sizing: border-box;
         }
         textarea {
-            height: calc(30% * 100vw);
-            max-height: 300px;
+            height: 100px;
             resize: vertical;
         }
         input[type="submit"] {
@@ -50,187 +49,183 @@
         input[type="submit"]:hover {
             background-color: #555;
         }
-        .checkbox-group {
+        .checkbox-group, .radio-group {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 10px;
+            margin-bottom: 10px;
         }
-        .checkbox-group label {
+        .checkbox-group label, .radio-group label {
             display: flex;
             align-items: center;
         }
-        .checkbox-group input[type="checkbox"] {
+        .checkbox-group input[type="checkbox"], .radio-group input[type="radio"] {
             margin-right: 5px;
         }
         @media (max-width: 600px) {
             body {
                 padding: 10px;
             }
-            .checkbox-group {
+            .checkbox-group, .radio-group {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Grocery Survey Form</h1>
+    <h1>Meal Planner Questionnaire</h1>
     <form id="surveyForm">
-        <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="fullName">What's your full name?</label>
+        <h2>Personal Information:</h2>
+        <label for="fullName">1. What's your full name?</label>
         <input type="text" id="fullName" name="fullName" required>
 
-        <label for="zipCode">What's the zip code you typically buy groceries in?</label>
+        <label for="email">2. What's your email address?</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="zipCode">3. What's your zip code or city where you typically buy groceries?</label>
         <input type="text" id="zipCode" name="zipCode" required>
 
-        <label for="peopleCount">How many people are you cooking for?</label>
-        <input type="number" id="peopleCount" name="peopleCount" required>
+        <h2>Household and Budget:</h2>
+        <label for="peopleCount">4. How many people are you cooking for?</label>
+        <input type="number" id="peopleCount" name="peopleCount" min="1" max="10" required>
 
-        <label for="dietaryRestrictions">Are there any specific dietary restrictions or preferences (e.g., vegetarian, gluten-free, allergies)?</label>
-        <textarea id="dietaryRestrictions" name="dietaryRestrictions"></textarea>
-
-        <label for="cookingSkills">How would you rate your cooking skills?</label>
-        <select id="cookingSkills" name="cookingSkills" required>
-            <option value="">Select an option</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-        </select>
-
-        <label for="breakfastFrequency">How often do you typically eat breakfast each week?</label>
-        <input type="number" id="breakfastFrequency" name="breakfastFrequency" min="0" max="7" required>
-
-        <label for="lunchFrequency">How often do you typically eat lunch each week?</label>
-        <input type="number" id="lunchFrequency" name="lunchFrequency" min="0" max="7" required>
-
-        <label for="dinnerFrequency">How often do you typically eat dinner each week?</label>
-        <input type="number" id="dinnerFrequency" name="dinnerFrequency" min="0" max="7" required>
-
-        <label for="favoriteFoods">What are some of your favorite foods or ingredients you enjoy eating?</label>
-        <textarea id="favoriteFoods" name="favoriteFoods"></textarea>
-
-        <label for="dislikedFoods">Are there any foods or ingredients you dislike or want to avoid?</label>
-        <textarea id="dislikedFoods" name="dislikedFoods"></textarea>
-
-        <label for="healthGoals">Are you aiming for any specific health goals (e.g., weight loss, muscle gain, general health)?</label>
-        <textarea id="healthGoals" name="healthGoals"></textarea>
-
-        <label for="portionPreference">Do you prefer larger or smaller portions for your meals?</label>
-        <select id="portionPreference" name="portionPreference" required>
-            <option value="">Select an option</option>
-            <option value="Smaller portions">Smaller portions</option>
-            <option value="Normal serving size">Normal serving size</option>
-            <option value="Larger portions">Larger portions</option>
-        </select>
-
-        <label for="groceryBudget">What is your weekly budget for groceries?</label>
-        <input type="text" id="groceryBudget" name="groceryBudget" required>
-
-        <label for="mealPrep">Do you prefer to cook meals each day or prep them ahead of time?</label>
-        <select id="mealPrep" name="mealPrep" required>
-            <option value="">Select an option</option>
-            <option value="Cook daily">Cook daily</option>
-            <option value="Prep ahead">Prep ahead</option>
-            <option value="Cook daily with a few meals prepped ahead">Cook daily with a few meals prepped ahead</option>
-            <option value="Prep ahead with a few meals cooked daily">Prep ahead with a few meals cooked daily</option>
-        </select>
-
-        <label>Name the kitchen equipment you have at home (e.g., blender, slow cooker, air fryer, oven, rice cooker, etc):</label>
-        <div class="checkbox-group">
-            <label><input type="checkbox" name="kitchenEquipment" value="Oven"> Oven</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Stove/Range"> Stove/Range (gas or electric)</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Microwave"> Microwave</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Toaster"> Toaster</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Blender"> Blender</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Rice Cooker"> Rice Cooker</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Slow Cooker/Crockpot"> Slow Cooker/Crockpot</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Air Fryer"> Air Fryer</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Food Processor"> Food Processor</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Electric Kettle"> Electric Kettle</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Stand Mixer"> Stand Mixer</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Hand Mixer"> Hand Mixer</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Toaster Oven"> Toaster Oven</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Pressure Cooker/Instant Pot"> Pressure Cooker/Instant Pot</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Waffle Maker"> Waffle Maker</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Electric Griddle"> Electric Griddle</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Sous Vide Machine"> Sous Vide Machine</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Bread Maker"> Bread Maker</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Juicer"> Juicer</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Indoor Grill/Panini Press"> Indoor Grill/Panini Press</label>
+        <label>5. What is your weekly budget for groceries?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="groceryBudget" value="$50-$100" required> $50-$100</label>
+            <label><input type="radio" name="groceryBudget" value="$101-$150"> $101-$150</label>
+            <label><input type="radio" name="groceryBudget" value="$151-$200"> $151-$200</label>
+            <label><input type="radio" name="groceryBudget" value="$201-$250"> $201-$250</label>
+            <label><input type="radio" name="groceryBudget" value="$251-$300"> $251-$300</label>
+            <label><input type="radio" name="groceryBudget" value="$301+"> $301+</label>
         </div>
 
-        <label for="mealVariety">Are you okay with eating the same meal multiple times in a week, or do you prefer a variety?</label>
-        <select id="mealVariety" name="mealVariety" required>
-            <option value="">Select an option</option>
-            <option value="Same meals">Same meals</option>
-            <option value="Same meals with a little bit of variety">Same meals with a little bit of variety</option>
-            <option value="Variety">Variety</option>
-        </select>
+        <h2>Dietary Preferences and Restrictions:</h2>
+        <label>6. Do you or anyone you're cooking for have any specific dietary restrictions or preferences? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="dietaryRestrictions" value="No restrictions"> No restrictions</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Vegetarian"> Vegetarian</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Vegan"> Vegan</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Gluten-free"> Gluten-free</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Dairy-free"> Dairy-free</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Keto"> Keto</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Paleo"> Paleo</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Low-carb"> Low-carb</label>
+            <label><input type="checkbox" name="dietaryRestrictions" value="Low-fat"> Low-fat</label>
+        </div>
+        <label for="otherDietaryRestrictions">Food allergies or other restrictions (please specify)</label>
+        <input type="text" id="otherDietaryRestrictions" name="otherDietaryRestrictions">
 
-        <label for="mealStorage">Do you prefer meals that can be easily stored and reheated, or do you prefer fresh meals?</label>
-        <select id="mealStorage" name="mealStorage" required>
-            <option value="">Select an option</option>
-            <option value="Stored and reheated">Stored and reheated</option>
-            <option value="Fresh">Fresh</option>
-            <option value="A mix of both">A mix of both</option>
-        </select>
+        <label>7. What are the preferred macronutrient goals for the majority of people you're cooking for?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="macronutrientGoals" value="Balanced" required> Balanced (equal proportion of carbs, protein, and fat)</label>
+            <label><input type="radio" name="macronutrientGoals" value="High protein, moderate carb, low fat"> High protein, moderate carb, low fat</label>
+            <label><input type="radio" name="macronutrientGoals" value="High fat, moderate protein, low carb"> High fat, moderate protein, low carb</label>
+            <label><input type="radio" name="macronutrientGoals" value="High carb, moderate protein, low fat"> High carb, moderate protein, low fat</label>
+            <label><input type="radio" name="macronutrientGoals" value="No preference"> No preference</label>
+        </div>
+        <label for="mixedMacronutrientGoals">Mixed preferences (please specify)</label>
+        <input type="text" id="mixedMacronutrientGoals" name="mixedMacronutrientGoals">
 
-        <p>
-            <input type="checkbox" id="consent" name="consent" required>
-            <label for="consent">I consent to the collection and processing of my survey responses as described in the privacy policy.</label>
-        </p>
+        <label>8. Do you have daily calorie goals for the people you're cooking for?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="calorieGoals" value="No specific goals" required> No specific goals</label>
+            <label><input type="radio" name="calorieGoals" value="Yes"> Yes, please specify for each person:</label>
+        </div>
+        <div id="calorieGoalsInputs" style="display: none;">
+            <label for="person1Calories">Person 1:</label>
+            <select id="person1Calories" name="person1Calories">
+                <option value="">Select calorie range</option>
+                <option value="1200-1500">1200-1500</option>
+                <option value="1501-1800">1501-1800</option>
+                <option value="1801-2100">1801-2100</option>
+                <option value="2101-2400">2101-2400</option>
+                <option value="2401+">2401+</option>
+            </select>
+            <!-- Additional person calorie inputs will be dynamically added here based on the answer to question 4 -->
+        </div>
 
-        <input type="submit" value="Submit">
-    </form>
+        <label>9. Are you or anyone you're cooking for aiming for any specific health goals? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="healthGoals" value="Weight loss"> Weight loss</label>
+            <label><input type="checkbox" name="healthGoals" value="Muscle gain"> Muscle gain</label>
+            <label><input type="checkbox" name="healthGoals" value="Maintenance"> Maintenance</label>
+            <label><input type="checkbox" name="healthGoals" value="Improved energy"> Improved energy</label>
+            <label><input type="checkbox" name="healthGoals" value="Better digestion"> Better digestion</label>
+        </div>
+        <label for="otherHealthGoals">Other health goals (please specify)</label>
+        <input type="text" id="otherHealthGoals" name="otherHealthGoals">
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('surveyForm');
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const data = {
-                fullName: formData.get('fullName'),
-                email: formData.get('email'),
-                results: []
-            };
-            
-            formData.forEach((value, key) => {
-                if (key !== 'fullName' && key !== 'email') {
-                    if (key === 'kitchenEquipment') {
-                        const checkedEquipment = Array.from(form.querySelectorAll('input[name="kitchenEquipment"]:checked'))
-                            .map(input => input.value);
-                        data.results.push(`Name the kitchen equipment you have at home: ${checkedEquipment.join(', ')}`);
-                    } else {
-                        const label = form.querySelector(`label[for="${key}"]`);
-                        const question = label ? label.textContent : key;
-                        data.results.push(`${question} ${value}`);
-                    }
-                }
-            });
+        <h2>Food Preferences:</h2>
+        <label>10. What are some favorite foods or ingredients among the people you're cooking for? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="favoriteFoods" value="Chicken"> Chicken</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Beef"> Beef</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Fish"> Fish</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Tofu"> Tofu</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Eggs"> Eggs</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Cheese"> Cheese</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Pasta"> Pasta</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Rice"> Rice</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Potatoes"> Potatoes</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Leafy greens"> Leafy greens</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Broccoli"> Broccoli</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Carrots"> Carrots</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Tomatoes"> Tomatoes</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Berries"> Berries</label>
+            <label><input type="checkbox" name="favoriteFoods" value="Nuts"> Nuts</label>
+        </div>
+        <label for="otherFavoriteFoods">Other favorites or individual preferences (please specify)</label>
+        <input type="text" id="otherFavoriteFoods" name="otherFavoriteFoods">
 
-            // Join results with semicolons
-            data.results = data.results.join('; ');
+        <label>11. Are there any foods or ingredients that you or anyone you're cooking for dislikes or wants to avoid? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="dislikedFoods" value="Mushrooms"> Mushrooms</label>
+            <label><input type="checkbox" name="dislikedFoods" value="Onions"> Onions</label>
+            <label><input type="checkbox" name="dislikedFoods" value="Bell peppers"> Bell peppers</label>
+            <label><input type="checkbox" name="dislikedFoods" value="Seafood"> Seafood</label>
+            <label><input type="checkbox" name="dislikedFoods" value="Spicy foods"> Spicy foods</label>
+        </div>
+        <label for="otherDislikedFoods">Other dislikes or individual restrictions (please specify)</label>
+        <input type="text" id="otherDislikedFoods" name="otherDislikedFoods">
 
-            // Send data to Google Sheet
-            fetch('https://script.google.com/macros/s/AKfycbyza1IyXT3u0bwhTz6_1oRumyAtIdxMBwbXCbE45iPRH03n7V76FrmeyIMOWsVKqbk-/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            }).then(() => {
-                alert('Form submitted successfully!');
-                form.reset();
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('There was an error submitting the form. Please try again.');
-            });
-        });
-    });
-    </script>
-</body>
-</html>
+        <label>12. What portion sizes do you typically prepare?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="portionSizes" value="Smaller portions for everyone" required> Smaller portions for everyone</label>
+            <label><input type="radio" name="portionSizes" value="Average portions for everyone"> Average portions for everyone</label>
+            <label><input type="radio" name="portionSizes" value="Larger portions for everyone"> Larger portions for everyone</label>
+            <label><input type="radio" name="portionSizes" value="Mixed"> Mixed (please specify individual needs)</label>
+        </div>
+        <input type="text" id="mixedPortionSizes" name="mixedPortionSizes" style="display: none;">
+
+        <h2>Cooking Habits and Skills:</h2>
+        <label>13. How would you rate your cooking skills?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="cookingSkills" value="Beginner" required> Beginner</label>
+            <label><input type="radio" name="cookingSkills" value="Intermediate"> Intermediate</label>
+            <label><input type="radio" name="cookingSkills" value="Advanced"> Advanced</label>
+        </div>
+
+        <label>14. What kitchen equipment do you have at home? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="kitchenEquipment" value="Oven"> Oven</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Stovetop"> Stovetop</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Microwave"> Microwave</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Blender"> Blender</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Food processor"> Food processor</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Slow cooker"> Slow cooker</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Pressure cooker"> Pressure cooker</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Air fryer"> Air fryer</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Grill"> Grill</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Rice cooker"> Rice cooker</label>
+        </div>
+        <label for="otherKitchenEquipment">Other equipment (please specify)</label>
+        <input type="text" id="otherKitchenEquipment" name="otherKitchenEquipment">
+
+        <label>15. Do you prefer to cook meals each day or prep them ahead of time?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="mealPrep" value="Cook daily" required> Cook daily</label>
+            <label><input type="radio" name="mealPrep" value="Prep some meals ahead"> Prep some meals ahead</label>
+            <label><input type="radio" name="mealPrep" value="Prep all meals ahead"> Prep all meals ahead</label>
+        </div>
+
+        <label>
