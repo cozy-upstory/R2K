@@ -17,8 +17,6 @@
             background-color: #f4f4f4;
             padding: 20px;
             border-radius: 5px;
-            position: relative;
-            padding-bottom: 60px;
         }
         label {
             display: block;
@@ -40,20 +38,6 @@
             height: 100px;
             resize: vertical;
         }
-        input[type="submit"] {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-        }
-        input[type="submit"]:hover {
-            background-color: #555;
-        }
         .checkbox-group, .radio-group {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -66,18 +50,6 @@
         }
         .checkbox-group input[type="checkbox"], .radio-group input[type="radio"] {
             margin-right: 5px;
-        }
-        .slider-container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .slider {
-            flex-grow: 1;
-        }
-        .slider-value {
-            min-width: 60px;
         }
         @media (max-width: 600px) {
             body {
@@ -94,22 +66,26 @@
     <form id="surveyForm">
         <h2>Personal Information:</h2>
         <label for="fullName">1. What's your full name?</label>
-        <input type="text" id="fullName" name="fullName" required placeholder="e.g., John Doe">
+        <input type="text" id="fullName" name="fullName" required>
 
         <label for="email">2. What's your email address?</label>
-        <input type="email" id="email" name="email" required placeholder="e.g., johndoe@example.com">
+        <input type="email" id="email" name="email" required>
 
         <label for="zipCode">3. What's your zip code or city where you typically buy groceries?</label>
-        <input type="text" id="zipCode" name="zipCode" required placeholder="e.g., 90210 or Los Angeles">
+        <input type="text" id="zipCode" name="zipCode" required>
 
         <h2>Household and Budget:</h2>
         <label for="peopleCount">4. How many people are you cooking for?</label>
-        <input type="number" id="peopleCount" name="peopleCount" min="1" max="20" required>
+        <input type="number" id="peopleCount" name="peopleCount" min="1" max="10" required>
 
-        <label for="groceryBudget">5. What is your weekly budget for groceries?</label>
-        <div class="slider-container">
-            <input type="range" id="groceryBudget" name="groceryBudget" min="50" max="500" step="10" class="slider" value="200">
-            <span class="slider-value">$200</span>
+        <label>5. What is your weekly budget for groceries?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="groceryBudget" value="$50-$100" required> $50-$100</label>
+            <label><input type="radio" name="groceryBudget" value="$101-$150"> $101-$150</label>
+            <label><input type="radio" name="groceryBudget" value="$151-$200"> $151-$200</label>
+            <label><input type="radio" name="groceryBudget" value="$201-$250"> $201-$250</label>
+            <label><input type="radio" name="groceryBudget" value="$251-$300"> $251-$300</label>
+            <label><input type="radio" name="groceryBudget" value="$301+"> $301+</label>
         </div>
 
         <h2>Dietary Preferences and Restrictions:</h2>
@@ -126,7 +102,7 @@
             <label><input type="checkbox" name="dietaryRestrictions" value="Low-fat"> Low-fat</label>
             <label><input type="checkbox" name="dietaryRestrictions" value="Other"> Other</label>
         </div>
-        <input type="text" id="otherDietaryRestrictions" name="otherDietaryRestrictions" placeholder="Please specify other dietary restrictions" style="display: none;">
+        <input type="text" id="otherDietaryRestrictions" name="otherDietaryRestrictions" placeholder="Please specify food allergies or other restrictions" style="display: none;">
 
         <label>7. What are the preferred macronutrient goals for the majority of people you're cooking for?</label>
         <div class="radio-group">
@@ -148,70 +124,7 @@
             <!-- Calorie goal inputs will be dynamically added here based on the number of people -->
         </div>
 
-        <script>
-            // Update slider value display
-            document.getElementById('groceryBudget').addEventListener('input', function() {
-                document.querySelector('.slider-value').textContent = '$' + this.value;
-            });
-
-            // Show/hide "Other" dietary restrictions input
-            document.querySelectorAll('input[name="dietaryRestrictions"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    document.getElementById('otherDietaryRestrictions').style.display = 
-                        document.querySelector('input[name="dietaryRestrictions"][value="Other"]').checked ? 'block' : 'none';
-                });
-            });
-
-            // Show/hide mixed macronutrient goals input
-            document.querySelectorAll('input[name="macronutrientGoals"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    document.getElementById('mixedMacronutrientGoals').style.display = 
-                        this.value === 'Mixed' ? 'block' : 'none';
-                });
-            });
-
-            // Show/hide and update calorie goal inputs
-            document.querySelectorAll('input[name="calorieGoals"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const calorieGoalsInputs = document.getElementById('calorieGoalsInputs');
-                    calorieGoalsInputs.style.display = this.value === 'Yes' ? 'block' : 'none';
-                    if (this.value === 'Yes') {
-                        updateCalorieGoalInputs();
-                    }
-                });
-            });
-
-            // Function to update calorie goal inputs
-            function updateCalorieGoalInputs() {
-                const peopleCount = parseInt(document.getElementById('peopleCount').value);
-                const calorieGoalsInputs = document.getElementById('calorieGoalsInputs');
-                calorieGoalsInputs.innerHTML = '';
-                for (let i = 1; i <= peopleCount; i++) {
-                    calorieGoalsInputs.innerHTML += `
-                        <div>
-                            <label for="person${i}Calories">Person ${i}:</label>
-                            <select id="person${i}Calories" name="person${i}Calories">
-                                <option value="">Select calorie range</option>
-                                <option value="1200-1500">1200-1500</option>
-                                <option value="1501-1800">1501-1800</option>
-                                <option value="1801-2100">1801-2100</option>
-                                <option value="2101-2400">2101-2400</option>
-                                <option value="2401+">2401+</option>
-                            </select>
-                        </div>
-                    `;
-                }
-            }
-
-            // Update calorie goal inputs when people count changes
-            document.getElementById('peopleCount').addEventListener('change', function() {
-                if (document.querySelector('input[name="calorieGoals"]:checked')?.value === 'Yes') {
-                    updateCalorieGoalInputs();
-                }
-            });
-        </script>
-
-       <label>9. Are you or anyone you're cooking for aiming for any specific health goals? (Select all that apply)</label>
+        <label>9. Are you or anyone you're cooking for aiming for any specific health goals? (Select all that apply)</label>
         <div class="checkbox-group">
             <label><input type="checkbox" name="healthGoals" value="Weight loss"> Weight loss</label>
             <label><input type="checkbox" name="healthGoals" value="Muscle gain"> Muscle gain</label>
@@ -224,8 +137,7 @@
 
         <h2>Food Preferences:</h2>
         <label>10. What are some favorite foods or ingredients among the people you're cooking for? (Select all that apply)</label>
-        <input type="text" id="favoriteFoodsSearch" placeholder="Search for foods...">
-        <div class="checkbox-group" id="favoriteFoodsGroup">
+        <div class="checkbox-group">
             <label><input type="checkbox" name="favoriteFoods" value="Chicken"> Chicken</label>
             <label><input type="checkbox" name="favoriteFoods" value="Beef"> Beef</label>
             <label><input type="checkbox" name="favoriteFoods" value="Fish"> Fish</label>
@@ -244,10 +156,9 @@
             <label><input type="checkbox" name="favoriteFoods" value="Other"> Other</label>
         </div>
         <input type="text" id="otherFavoriteFoods" name="otherFavoriteFoods" placeholder="Please specify other favorite foods" style="display: none;">
-
+        
         <label>11. Are there any foods or ingredients that you or anyone you're cooking for dislikes or wants to avoid? (Select all that apply)</label>
-        <input type="text" id="dislikedFoodsSearch" placeholder="Search for foods...">
-        <div class="checkbox-group" id="dislikedFoodsGroup">
+        <div class="checkbox-group">
             <label><input type="checkbox" name="dislikedFoods" value="Mushrooms"> Mushrooms</label>
             <label><input type="checkbox" name="dislikedFoods" value="Onions"> Onions</label>
             <label><input type="checkbox" name="dislikedFoods" value="Bell peppers"> Bell peppers</label>
@@ -255,7 +166,7 @@
             <label><input type="checkbox" name="dislikedFoods" value="Spicy foods"> Spicy foods</label>
             <label><input type="checkbox" name="dislikedFoods" value="Other"> Other</label>
         </div>
-        <input type="text" id="otherDislikedFoods" name="otherDislikedFoods" placeholder="Please specify other disliked foods" style="display: none;">
+        <input type="text" id="otherDislikedFoods" name="otherDislikedFoods" placeholder="Please specify other dislikes or individual restrictions" style="display: none;">
 
         <label>12. What portion sizes do you typically prepare?</label>
         <div class="radio-group">
@@ -269,9 +180,9 @@
         <h2>Cooking Habits and Skills:</h2>
         <label>13. How would you rate your cooking skills?</label>
         <div class="radio-group">
-            <label><input type="radio" name="cookingSkills" value="Beginner" required> Beginner (I can follow simple recipes)</label>
-            <label><input type="radio" name="cookingSkills" value="Intermediate"> Intermediate (I can cook most dishes with a recipe)</label>
-            <label><input type="radio" name="cookingSkills" value="Advanced"> Advanced (I can cook without recipes and experiment)</label>
+            <label><input type="radio" name="cookingSkills" value="Beginner" required> Beginner</label>
+            <label><input type="radio" name="cookingSkills" value="Intermediate"> Intermediate</label>
+            <label><input type="radio" name="cookingSkills" value="Advanced"> Advanced</label>
         </div>
 
         <label>14. What kitchen equipment do you have at home? (Select all that apply)</label>
@@ -279,31 +190,77 @@
             <label><input type="checkbox" name="kitchenEquipment" value="Oven"> Oven</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Stovetop"> Stovetop</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Microwave"> Microwave</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Refrigerator"> Refrigerator</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Freezer"> Freezer</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Blender"> Blender</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Food processor"> Food processor</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Stand mixer"> Stand mixer</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Hand mixer"> Hand mixer</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Slow cooker"> Slow cooker (Crock-Pot)</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Pressure cooker"> Pressure cooker (Instant Pot)</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Slow cooker"> Slow cooker</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Pressure cooker"> Pressure cooker</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Air fryer"> Air fryer</label>
+            <label><input type="checkbox" name="kitchenEquipment" value="Grill"> Grill</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Rice cooker"> Rice cooker</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Toaster"> Toaster</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Toaster oven"> Toaster oven</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Grill"> Grill (indoor or outdoor)</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Sous vide"> Sous vide machine</label>
-            <label><input type="checkbox" name="kitchenEquipment" value="Juicer"> Juicer</label>
             <label><input type="checkbox" name="kitchenEquipment" value="Other"> Other</label>
         </div>
-        <input type="text" id="otherKitchenEquipment" name="otherKitchenEquipment" placeholder="Please specify other kitchen equipment" style="display: none;">
+        <input type="text" id="otherKitchenEquipment" name="otherKitchenEquipment" placeholder="Please specify other equipment" style="display: none;">
 
         <label>15. Do you prefer to cook meals each day or prep them ahead of time?</label>
         <div class="radio-group">
-            <label><input type="radio" name="mealPrep" value="Cook daily" required> Cook daily (I prefer to cook fresh meals each day)</label>
-            <label><input type="radio" name="mealPrep" value="Prep some meals ahead"> Prep some meals ahead (I like a mix of fresh cooking and meal prep)</label>
-            <label><input type="radio" name="mealPrep" value="Prep all meals ahead"> Prep all meals ahead (I prefer to do most of my cooking in batches)</label>
+            <label><input type="radio" name="mealPrep" value="Cook daily" required> Cook daily</label>
+            <label><input type="radio" name="mealPrep" value="Prep some meals ahead"> Prep some meals ahead</label>
+            <label><input type="radio" name="mealPrep" value="Prep all meals ahead"> Prep all meals ahead</label>
         </div>
+
+        <label>16. Do you prefer meals that can be easily stored and reheated, or do you prefer fresh meals?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="mealStorage" value="Mostly fresh meals" required> Mostly fresh meals</label>
+            <label><input type="radio" name="mealStorage" value="Mix of fresh and reheatable meals"> Mix of fresh and reheatable meals</label>
+            <label><input type="radio" name="mealStorage" value="Mostly reheatable meals"> Mostly reheatable meals</label>
+        </div>
+
+        <h2>Meal Planning Preferences:</h2>
+        <label>17. For how many days would you like a meal plan?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="mealPlanDays" value="3 days" required> 3 days</label>
+            <label><input type="radio" name="mealPlanDays" value="5 days"> 5 days</label>
+            <label><input type="radio" name="mealPlanDays" value="7 days"> 7 days</label>
+        </div>
+
+        <label>18. Which meal types would you like included in your plan? (Select all that apply)</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="mealTypes" value="Breakfast"> Breakfast</label>
+            <label><input type="checkbox" name="mealTypes" value="Lunch"> Lunch</label>
+            <label><input type="checkbox" name="mealTypes" value="Dinner"> Dinner</label>
+            <label><input type="checkbox" name="mealTypes" value="Snacks"> Snacks</label>
+        </div>
+
+        <label>19. On average, how many people will be eating each meal type per day?</label>
+        <div>
+            <label for="breakfastCount">Breakfast:</label>
+            <input type="number" id="breakfastCount" name="breakfastCount" min="0" max="10">
+        </div>
+        <div>
+            <label for="lunchCount">Lunch:</label>
+            <input type="number" id="lunchCount" name="lunchCount" min="0" max="10">
+        </div>
+        <div>
+            <label for="dinnerCount">Dinner:</label>
+            <input type="number" id="dinnerCount" name="dinnerCount" min="0" max="10">
+        </div>
+        <div>
+            <label for="snacksCount">Snacks:</label>
+            <input type="number" id="snacksCount" name="snacksCount" min="0" max="10">
+        </div>
+
+        <label>20. Do you prefer to eat the same meal multiple times in a week, or do you prefer more variety?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="mealVariety" value="I enjoy repeating meals" required> I enjoy repeating meals</label>
+            <label><input type="radio" name="mealVariety" value="I prefer some variety"> I prefer some variety</label>
+            <label><input type="radio" name="mealVariety" value="I want a different meal every time"> I want a different meal every time</label>
+            <label><input type="radio" name="mealVariety" value="Mixed preferences"> Mixed preferences</label>
+        </div>
+        <input type="text" id="mixedMealVariety" name="mixedMealVariety" placeholder="Please specify mixed preferences" style="display: none;">
+
+        <h2>Additional Information:</h2>
+        <label for="additionalInfo">21. Are there any ingredients you already have or any other dietary considerations we should know about?</label>
+        <textarea id="additionalInfo" name="additionalInfo"></textarea>
 
         <input type="submit" value="Submit">
     </form>
@@ -319,12 +276,20 @@
             });
         }
 
+        setupOtherOption('dietaryRestrictions', 'otherDietaryRestrictions');
         setupOtherOption('healthGoals', 'otherHealthGoals');
         setupOtherOption('favoriteFoods', 'otherFavoriteFoods');
         setupOtherOption('dislikedFoods', 'otherDislikedFoods');
         setupOtherOption('kitchenEquipment', 'otherKitchenEquipment');
 
-        // Show/hide mixed portion sizes input
+        // Show/hide mixed preferences inputs
+        document.querySelectorAll('input[name="macronutrientGoals"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('mixedMacronutrientGoals').style.display = 
+                    this.value === 'Mixed' ? 'block' : 'none';
+            });
+        });
+
         document.querySelectorAll('input[name="portionSizes"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 document.getElementById('mixedPortionSizes').style.display = 
@@ -332,24 +297,57 @@
             });
         });
 
-        // Search functionality for favorite and disliked foods
-        function setupSearch(searchId, groupId) {
-            document.getElementById(searchId).addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                document.querySelectorAll(`#${groupId} label`).forEach(label => {
-                    const text = label.textContent.toLowerCase();
-                    label.style.display = text.includes(searchTerm) ? '' : 'none';
-                });
+        document.querySelectorAll('input[name="mealVariety"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('mixedMealVariety').style.display = 
+                    this.value === 'Mixed preferences' ? 'block' : 'none';
             });
+        });
+
+        // Show/hide and update calorie goal inputs
+        document.querySelectorAll('input[name="calorieGoals"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const calorieGoalsInputs = document.getElementById('calorieGoalsInputs');
+                calorieGoalsInputs.style.display = this.value === 'Yes' ? 'block' : 'none';
+                if (this.value === 'Yes') {
+                    updateCalorieGoalInputs();
+                }
+            });
+        });
+
+        // Function to update calorie goal inputs
+        function updateCalorieGoalInputs() {
+            const peopleCount = parseInt(document.getElementById('peopleCount').value);
+            const calorieGoalsInputs = document.getElementById('calorieGoalsInputs');
+            calorieGoalsInputs.innerHTML = '';
+            for (let i = 1; i <= peopleCount; i++) {
+                calorieGoalsInputs.innerHTML += `
+                    <div>
+                        <label for="person${i}Calories">Person ${i}:</label>
+                        <select id="person${i}Calories" name="person${i}Calories">
+                            <option value="">Select calorie range</option>
+                            <option value="1200-1500">1200-1500</option>
+                            <option value="1501-1800">1501-1800</option>
+                            <option value="1801-2100">1801-2100</option>
+                            <option value="2101-2400">2101-2400</option>
+                            <option value="2401+">2401+</option>
+                        </select>
+                    </div>
+                `;
+            }
         }
 
-        setupSearch('favoriteFoodsSearch', 'favoriteFoodsGroup');
-        setupSearch('dislikedFoodsSearch', 'dislikedFoodsGroup');
+        // Update calorie goal inputs when people count changes
+        document.getElementById('peopleCount').addEventListener('change', function() {
+            if (document.querySelector('input[name="calorieGoals"]:checked')?.value === 'Yes') {
+                updateCalorieGoalInputs();
+            }
+        });
 
         // Form submission
-        document.getElementById('surveyForm').addEventListener('submit', e => {
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(e.target);
+            const formData = new FormData(this);
             const data = {
                 fullName: formData.get('fullName'),
                 email: formData.get('email'),
@@ -358,12 +356,12 @@
             
             formData.forEach((value, key) => {
                 if (key !== 'fullName' && key !== 'email') {
-                    if (['kitchenEquipment', 'dietaryRestrictions', 'healthGoals', 'favoriteFoods', 'dislikedFoods'].includes(key)) {
-                        const checkedItems = Array.from(e.target.querySelectorAll(`input[name="${key}"]:checked`))
+                    if (['kitchenEquipment', 'dietaryRestrictions', 'healthGoals', 'favoriteFoods', 'dislikedFoods', 'mealTypes'].includes(key)) {
+                        const checkedItems = Array.from(this.querySelectorAll(`input[name="${key}"]:checked`))
                             .map(input => input.value);
                         data.results.push(`${key}: ${checkedItems.join(', ')}`);
                     } else {
-                        const label = e.target.querySelector(`label[for="${key}"]`);
+                        const label = this.querySelector(`label[for="${key}"]`);
                         const question = label ? label.textContent : key;
                         data.results.push(`${question} ${value}`);
                     }
@@ -384,7 +382,7 @@
                 body: JSON.stringify(data)
             }).then(() => {
                 alert('Form submitted successfully!');
-                e.target.reset();
+                this.reset();
             }).catch(error => {
                 console.error('Error:', error);
                 alert('There was an error submitting the form. Please try again.');
